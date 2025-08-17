@@ -4,7 +4,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+ 
 var indexRouter = require('./routes/index');
 // ⬇️ Destructure the "router" from users.js so we pass a middleware, not an object
 var { router: usersRouter } = require('./routes/users');
@@ -14,6 +14,8 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+// app.js
+app.set('trust proxy', 1);
 
 app.use(logger('dev'));
 app.use(express.json());

@@ -124,8 +124,8 @@ function cookieOpts() {
   const isProd = process.env.NODE_ENV === "production";
   return {
     httpOnly: true,
-    sameSite: isProd ? "lax" : "lax",
-    secure: isProd, // must be true in HTTPS (prod)
+    sameSite: true ? "lax" : "lax",
+    secure: true, // must be true in HTTPS (prod)
     path: "/",
     maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
   };

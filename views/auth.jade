@@ -4,161 +4,112 @@ extends layout
 block content
   style.
     :root{
-      --bg1:#0b1020; --bg2:#0d1326;
-      --card:#0f172a; --glass:rgba(255,255,255,.06); --border:rgba(255,255,255,.12);
-      --ring:#7dd3fc; --violet:#c084fc; --teal:#34d399; --amber:#f59e0b;
-      --text:#e5e7eb; --muted:#9ca3af; --danger:#fca5a5;
-      --radius:18px; --shadow:0 18px 50px rgba(0,0,0,.55);
-      --ringGlow:0 0 0 6px rgba(125,211,252,.09);
-      --grid: clamp(300px, 48vw, 620px);
+      /* Soft, minimal palette */
+      --bg1:#0e1320; --bg2:#0e1320;
+      --card:#121a2b; --border:#1f2a3d;
+      --text:#e7ecf5; --muted:#9aa7bf;
+      --ring:#7cb3ff; --accent:#b49cff;
+      --danger:#fca5a5;
+      --radius:12px; --shadow:0 8px 20px rgba(0,0,0,.30);
+      --ringGlow:0 0 0 4px rgba(124,179,255,.18);
+      --grid:clamp(300px, 48vw, 620px);
     }
     body{
       margin:0;
-      background:
-        radial-gradient(80vmax 80vmax at 10% 10%, rgba(99,102,241,.12), transparent 40%),
-        radial-gradient(70vmax 70vmax at 90% 20%, rgba(20,184,166,.10), transparent 35%),
-        linear-gradient(180deg, var(--bg1), var(--bg2));
+      background: linear-gradient(180deg, var(--bg1), var(--bg2));
       color:var(--text);
       font-synthesis-weight:none;
     }
-    .auth-wrap{max-width:1100px;margin:3rem auto;padding:0 1.25rem;}
+    .auth-wrap{max-width:980px;margin:2rem auto;padding:0 1rem;}
     .shell{
-      display:grid;grid-template-columns: 1fr var(--grid);gap:28px;
-      align-items:stretch;
+      display:grid;grid-template-columns:1fr var(--grid);gap:20px;align-items:start;
     }
     @media (max-width:980px){ .shell{grid-template-columns:1fr} .visual{order:2} .panel{order:1} }
 
-    /* Left visual / brand */
+    /* Left visual kept very simple */
     .visual{
-      position:relative;
-      min-height:520px;
       border:1px solid var(--border);
-      border-radius:calc(var(--radius) + 6px);
-      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-      overflow:hidden;
+      border-radius:var(--radius);
+      background: #0f1728;
+      padding:1rem;
       box-shadow:var(--shadow);
-      isolation:isolate;
     }
-    .visual::before{
-      content:"";
-      position:absolute; inset:-30% -20% auto auto;
-      width:70vmin;height:70vmin; border-radius:50%;
-      background: radial-gradient(closest-side, rgba(192,132,252,.18), transparent 70%);
-      filter:blur(10px); z-index:-1;
-      animation: float 12s ease-in-out infinite alternate;
-    }
-    @keyframes float{ to { transform: translate(-10px, 14px) scale(1.04);} }
-    .brand{
-      display:flex;align-items:center;gap:.75rem;padding:1.25rem 1.25rem 0 1.25rem;
-    }
+    .brand{display:flex;align-items:center;gap:.6rem;padding:.25rem 0 .75rem}
     .logo{
-      inline-size:40px; block-size:40px; border-radius:12px;
-      background:
-        conic-gradient(from 0deg, #60a5fa, #34d399, #c084fc, #60a5fa);
-      mask: radial-gradient(circle at 30% 30%, black 62%, transparent 63%) padding-box,
-            linear-gradient(#000,#000) border-box;
-      -webkit-mask-composite: xor; mask-composite: exclude;
-      border:1px solid rgba(255,255,255,.25);
-      box-shadow:0 0 0 6px rgba(255,255,255,.03);
+      inline-size:28px; block-size:28px; border-radius:8px;
+      background:#2a3a58; border:1px solid var(--border);
     }
-    .brand h1{font-size:1.1rem;margin:0;color:#dbeafe;font-weight:800;letter-spacing:.3px}
-    .visual-copy{
-      padding:2.25rem 1.5rem 1.5rem 1.5rem;
-    }
+    .brand h1{font-size:1rem;margin:0;color:#dbe7ff;font-weight:800;letter-spacing:.2px}
+    .visual-copy{padding:.5rem 0}
     .kicker{
       display:inline-flex;align-items:center;gap:.5rem;
-      font-size:.8rem;color:var(--muted);background:rgba(255,255,255,.05);
-      border:1px solid var(--border); padding:.35rem .6rem; border-radius:999px;
+      font-size:.78rem;color:var(--muted);
+      background:#0d1627; border:1px solid var(--border);
+      padding:.3rem .55rem; border-radius:999px;
     }
-    .kicker .dot{width:6px;height:6px;border-radius:50%;background:var(--teal)}
-    .visual h2{
-      margin:.8rem 0 .5rem; font-size:2.1rem; line-height:1.15; letter-spacing:.2px;
-    }
-    .visual p{color:#cbd5e1;max-width:52ch;margin:0}
-    .badges{
-      display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1rem;
-    }
+    .kicker .dot{width:6px;height:6px;border-radius:50%;background:#34d399}
+    .visual h2{margin:.7rem 0 .4rem; font-size:1.4rem; line-height:1.25}
+    .visual p{color:#c8d2ea; margin:0}
+    .badges{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.75rem}
     .badge{
-      padding:.38rem .6rem; border:1px dashed rgba(255,255,255,.18);
-      border-radius:999px; font-size:.78rem; color:#d1d5db;
-      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      padding:.28rem .5rem; border:1px solid var(--border);
+      border-radius:999px; font-size:.72rem; color:#cfd8ee; background:#0d1627;
     }
-    .hintline{
-      display:flex;align-items:center;gap:.5rem; margin-top:1.25rem; color:var(--muted);font-size:.92rem;
-    }
+    .hintline{display:flex;align-items:center;gap:.5rem;margin-top:.9rem;color:var(--muted);font-size:.9rem}
     .hintline svg{opacity:.8}
 
     /* Right panel */
-    .panel{
-      display:flex;flex-direction:column;gap:18px;
-    }
-    .hero{
-      padding:.75rem 0 .25rem;
-      border-left:4px solid rgba(96,165,250,.45);
-      padding-left:12px;
-    }
-    .hero h2{margin:.15rem 0 .35rem;font-size:1.8rem}
-    .hero p{margin:0;color:var(--muted)}
-    .grid{
-      display:grid;grid-template-columns:1fr;gap:16px;
-    }
-    @media (min-width:560px){ .grid{grid-template-columns:1fr 1fr} }
-
-    /* Cards & form */
-    .form-card{
-      position:relative;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-      border:1px solid var(--border); border-radius:var(--radius);
-      box-shadow:var(--shadow); padding:1.25rem 1.25rem 1.35rem; backdrop-filter:blur(12px);
-      transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-    }
-    .form-card:hover{ transform: translateY(-2px); border-color: rgba(125,211,252,.35); box-shadow: 0 20px 60px rgba(2,6,23,.55) }
-    .form-card h3{margin:0 0 .9rem;font-size:1.1rem;letter-spacing:.2px}
-    label{display:block;margin:.65rem 0 .35rem;font-weight:700;font-size:.92rem;color:#dbeafe}
-    .field{position:relative;}
-    input[type="email"],input[type="password"]{
-      width:100%;padding:.78rem 1rem;border-radius:14px;border:1px solid var(--border);
-      background:rgba(2,6,23,.55);color:var(--text);
-      transition:border-color .2s ease, box-shadow .2s ease, background .2s ease;
-    }
-    input::placeholder{color:#94a3b8}
-    input:focus{border-color:var(--ring);outline:none; box-shadow:var(--ringGlow)}
-    .eye-btn{
-      position:absolute;right:.55rem;top:50%;transform:translateY(-50%);
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      border:1px solid var(--border); color:#cbd5e1;cursor:pointer; border-radius:10px;
-      padding:.35rem .5rem; line-height:1; transition: border-color .2s ease, transform .15s ease;
-    }
-    .eye-btn:hover{ border-color: rgba(125,211,252,.35); transform: translateY(-50%) scale(1.03) }
-
-    .btn{
-      margin-top:1rem;width:100%;padding:.9rem 1rem;border-radius:14px;
-      border:1px solid rgba(125,211,252,.45);
-      background:
-        linear-gradient(135deg, rgba(125,211,252,.18), rgba(192,132,252,.18)),
-        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      color:var(--text);font-weight:800;cursor:pointer;letter-spacing:.2px;
-      transition:filter .2s ease, transform .15s ease, box-shadow .2s ease;
-      box-shadow: 0 10px 30px rgba(2,6,23,.4), inset 0 0 0 999px rgba(255,255,255,.01);
-    }
-    .btn:hover{ filter:brightness(1.1); box-shadow: 0 16px 40px rgba(2,6,23,.55) }
-    .btn:active{ transform: translateY(1px) }
-
-    .form-hint{display:flex;align-items:center;gap:.5rem;color:var(--muted);font-size:.9rem;margin-top:.65rem}
-    .divider{
-      height:1px;background:linear-gradient(90deg, transparent, rgba(255,255,255,.14), transparent);
-      margin:.75rem 0 0;
-    }
-    .hint{
-      color:var(--muted);font-size:.95rem;margin-top:.9rem;text-align:center
-    }
+    .panel{display:flex;flex-direction:column;gap:14px}
+    .hero{padding:.25rem 0}
+    .hero h2{margin:.1rem 0 .25rem;font-size:1.4rem}
+    .hero p{margin:0;color:var(--muted);font-size:.95rem}
     .status{
       display:inline-flex;align-items:center;gap:.5rem;
-      padding:.4rem .7rem;border-radius:999px;border:1px solid var(--border);
-      background:rgba(255,255,255,.04);font-size:.85rem;color:#bfdbfe
+      padding:.35rem .6rem;border-radius:999px;border:1px solid var(--border);
+      background:#0d1627;font-size:.82rem;color:#bfdbfe
     }
-    .status .pill{width:8px;height:8px;border-radius:50%;background:var(--amber)}
+    .status .pill{width:8px;height:8px;border-radius:50%;background:#f59e0b}
+
+    .grid{display:grid;grid-template-columns:1fr;gap:12px}
+    @media (min-width:560px){ .grid{grid-template-columns:1fr 1fr} }
+
+    /* Cards & inputs */
+    .form-card{
+      background:#0f1728;
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:1rem;
+    }
+    .form-card h3{margin:0 0 .7rem;font-size:1rem}
+    .divider{height:1px;background:#1b2537;margin:.5rem 0 .25rem}
+
+    label{display:block;margin:.55rem 0 .3rem;font-weight:700;font-size:.9rem;color:#dfe7fb}
+    .field{position:relative}
+    input[type="email"],input[type="password"]{
+      width:100%;padding:.7rem .9rem;border-radius:10px;border:1px solid var(--border);
+      background:#0b1426;color:var(--text);transition:border-color .15s, box-shadow .15s;
+    }
+    input::placeholder{color:#90a0be}
+    input:focus{border-color:var(--ring);outline:none; box-shadow:var(--ringGlow)}
+    .eye-btn{
+      position:absolute;right:.45rem;top:50%;transform:translateY(-50%);
+      background:#0b1426;border:1px solid var(--border);color:#cbd5e1;cursor:pointer;border-radius:8px;
+      padding:.25rem .5rem; line-height:1;
+    }
+
+    .btn{
+      margin-top:.8rem;width:100%;padding:.8rem 1rem;border-radius:10px;
+      border:1px solid rgba(124,179,255,.45);
+      background:linear-gradient(135deg, rgba(124,179,255,.16), rgba(180,156,255,.14));
+      color:var(--text);font-weight:800;cursor:pointer;letter-spacing:.2px;
+      transition:filter .15s ease, transform .05s ease;
+    }
+    .btn:hover{ filter:brightness(1.06) }
+    .btn:active{ transform: translateY(1px) }
+
+    .form-hint{display:flex;align-items:center;gap:.5rem;color:var(--muted);font-size:.88rem;margin-top:.55rem}
+    .hint{color:var(--muted);font-size:.92rem;margin-top:.7rem;text-align:center}
 
   .auth-wrap
     .shell
@@ -170,18 +121,17 @@ block content
           span.kicker
             span.dot
             | Secure workspace access
-          h2 Ship tasks faster with a calm, focused flow
-          p Manage backlog, sprint work-in-progress, reviews, and done—without the noise. Lightweight auth, fast UI, and zero setup friction.
+          h2 Simple sign-in to access your tasks
+          p Keep work organized with a lightweight board and clear views.
           .badges
-            span.badge JWT Sessions
-            span.badge CSRF-safe forms
-            span.badge Minimal clicks
-            span.badge Mobile ready
+            span.badge Email-based sign-in
+            span.badge JWT cookie
+            span.badge Mobile friendly
           .hintline
             svg(width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round")
               path(d="M12 20h9")
               path(d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z")
-            span Personal accounts only. Your email is used for sign-in and notifications.
+            span Your email is used only for sign-in and notices.
 
       .panel
         .hero
@@ -194,7 +144,7 @@ block content
                 span.pill
                 | #{user.email}
           else
-            p Access your team’s task board by signing up or logging in.
+            p Sign up or log in to access your task board.
 
         if !user
           .grid
@@ -213,7 +163,7 @@ block content
                 .form-hint
                   svg(width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round")
                     path(d="M20 6L9 17l-5-5")
-                  span Passwords are hashed. We never store plain text.
+                  span Passwords are hashed. Plain text is never stored.
             .form-card
               h3 Welcome back
               .divider
@@ -233,7 +183,7 @@ block content
                     path(d="M12 8h.01")
                   span Trouble logging in? Contact your admin.
 
-          p.hint After signing up or logging in, you will be taken to the Task Board.
+          p.hint After sign-up or login, you’ll be taken to the Task Board.
 
         else
           .form-card
@@ -241,7 +191,7 @@ block content
             .divider
             form(action="/users/logout" method="post")
               button.btn(type="submit") Log out
-          p.hint Click logout to sign out and return to login/signup.
+          p.hint Click logout to return to login/signup.
 
   if !user
     //- JS is intentionally untouched below

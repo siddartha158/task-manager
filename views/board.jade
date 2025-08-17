@@ -219,7 +219,7 @@ block content
 
       taskForm.onsubmit=async(e)=>{
         e.preventDefault();
-        if(!JWT) return alert('Log in first (see /auth)');
+        //- if(!JWT) return alert('Log in first (see /auth)');
         const payload={
           title: document.getElementById('tTitle').value.trim(),
           description: document.getElementById('tDesc').value,

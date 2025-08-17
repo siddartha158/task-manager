@@ -76,7 +76,7 @@ router.get('/tasks/view', requirePageAuth, (req, res) => {
 // ---- API routes (JWT via header OR cookie) ----
 
 // GET /tasks?assigneeId=&priority=
-router.get('/tasks', requireAuth, async (req, res, next) => {
+router.get('/tasks', requirePageAuth, async (req, res, next) => {
   try {
     const { assigneeId, priority } = req.query;
     const where = [];
@@ -100,7 +100,7 @@ router.get('/tasks', requireAuth, async (req, res, next) => {
 });
 
 // GET /tasks/:id
-router.get('/tasks/:id', requireAuth, async (req, res, next) => {
+router.get('/tasks/:id', requirePageAuth, async (req, res, next) => {
   try {
     const id = Number(req.params.id);
     const tr = await pool.query(
@@ -119,7 +119,7 @@ router.get('/tasks/:id', requireAuth, async (req, res, next) => {
 });
 
 // POST /tasks
-router.post('/tasks', requireAuth, async (req, res, next) => {
+router.post('/tasks', requirePageAuth, async (req, res, next) => {
   try {
     const { title, description = '', priority = 'Medium', assigneeId = null, dueDate = null } = req.body || {};
     if (!title) return res.status(400).json({ error: 'title required' });
@@ -142,7 +142,7 @@ router.post('/tasks', requireAuth, async (req, res, next) => {
 });
 
 // PATCH /tasks/:id
-router.patch('/tasks/:id', requireAuth, async (req, res, next) => {
+router.patch('/tasks/:id', requirePageAuth, async (req, res, next) => {
   try {
     const id = Number(req.params.id);
     const { title, description, priority, assigneeId, status, dueDate } = req.body || {};
@@ -187,7 +187,7 @@ router.patch('/tasks/:id', requireAuth, async (req, res, next) => {
 });
 
 // DELETE /tasks/:id
-router.delete('/tasks/:id', requireAuth, async (req, res, next) => {
+router.delete('/tasks/:id', requirePageAuth, async (req, res, next) => {
   try {
     const id = Number(req.params.id);
     const r = await pool.query('DELETE FROM tasks WHERE id=$1', [id]);
@@ -197,7 +197,7 @@ router.delete('/tasks/:id', requireAuth, async (req, res, next) => {
 });
 
 // POST /tasks/:id/comments
-router.post('/tasks/:id/comments', requireAuth, async (req, res, next) => {
+router.post('/tasks/:id/comments', requirePageAuth, async (req, res, next) => {
   try {
     const taskId = Number(req.params.id);
     const { body } = req.body || {};

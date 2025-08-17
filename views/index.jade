@@ -1,0 +1,198 @@
+//- views/index.jade
+extends layout
+
+block content
+  //- Inline CSS (scoped to common tags/classes for this page)
+  style.
+    /* --- Modern, clean UI --- */
+    :root {
+      --bg1: #0f172a;         /* slate-900 */
+      --bg2: #1e293b;         /* slate-800 */
+      --glass: rgba(255,255,255,0.06);
+      --border: rgba(255,255,255,0.14);
+      --text: #e5e7eb;        /* gray-200 */
+      --muted: #94a3b8;       /* slate-400 */
+      --accent: #60a5fa;      /* blue-400 */
+      --accent-2: #a78bfa;    /* violet-400 */
+      --success: #34d399;     /* emerald-400 */
+      --shadow: 0 10px 30px rgba(0,0,0,0.35);
+      --radius: 16px;
+    }
+    @keyframes floatUp {
+      from { transform: translateY(6px); opacity: .0; }
+      to   { transform: translateY(0);   opacity: 1; }
+    }
+    body {
+      background: radial-gradient(1200px 800px at 10% 10%, #0b1222 0%, transparent 60%),
+                  radial-gradient(1200px 800px at 90% 20%, #141e36 0%, transparent 60%),
+                  linear-gradient(180deg, var(--bg1), var(--bg2));
+      color: var(--text);
+    }
+    .hero {
+      max-width: 920px;
+      margin: 3rem auto 2rem;
+      padding: 0 1rem;
+      text-align: center;
+      animation: floatUp .6s ease-out both;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: .85rem;
+      color: var(--accent);
+      background: linear-gradient(135deg, rgba(96,165,250,.15), rgba(167,139,250,.15));
+      border: 1px solid rgba(96,165,250,.35);
+      border-radius: 999px;
+      padding: .35rem .75rem;
+      letter-spacing: .02em;
+      backdrop-filter: blur(6px);
+    }
+    .card {
+      max-width: 920px;
+      margin: 1rem auto 3rem;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 2rem;
+      backdrop-filter: blur(8px);
+      animation: floatUp .8s .1s ease-out both;
+    }
+    .card h2 {
+      font-size: clamp(1.4rem, 3.2vw, 2rem);
+      margin: 0 0 .5rem;
+      letter-spacing: .02em;
+    }
+    .subtitle {
+      color: var(--muted);
+      margin: 0 auto 1rem;
+      max-width: 60ch;
+      line-height: 1.6;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin: 1.25rem 0 0;
+    }
+    @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
+    .tile {
+      position: relative;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.1rem 1.1rem 1.1rem 1.1rem;
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+    .tile:hover {
+      transform: translateY(-2px);
+      border-color: rgba(167,139,250,.45);
+      box-shadow: 0 12px 26px rgba(0,0,0,0.35);
+    }
+    .tile a {
+      text-decoration: none;
+      color: var(--text);
+      display: block;
+    }
+    .tile h3 {
+      margin: .35rem 0 .35rem;
+      font-size: 1.05rem;
+      letter-spacing: .01em;
+    }
+    .tile p {
+      margin: 0;
+      color: var(--muted);
+      font-size: .93rem;
+      line-height: 1.5;
+    }
+    .chip {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      font-size: .72rem;
+      color: #0b1222;
+      background: linear-gradient(135deg, #60a5fa, #a78bfa);
+      padding: .25rem .55rem;
+      border-radius: 999px;
+      font-weight: 600;
+      letter-spacing: .02em;
+    }
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      margin-top: 1.25rem;
+      padding: .7rem 1rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, rgba(96,165,250,.18), rgba(167,139,250,.18));
+      border: 1px solid rgba(96,165,250,.45);
+      border-radius: 12px;
+      color: var(--text);
+      text-decoration: none;
+      transition: transform .16s ease, background .16s ease, border-color .16s ease;
+    }
+    .cta:hover { transform: translateY(-1px); background: linear-gradient(135deg, rgba(96,165,250,.26), rgba(167,139,250,.26)); }
+    .list {
+      margin: 1.25rem 0 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      gap: .75rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .list a {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      padding: .55rem .8rem;
+      font-size: .92rem;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      text-decoration: none;
+      background: rgba(255,255,255,0.04);
+      transition: all .16s ease;
+    }
+    .list a:hover { border-color: rgba(52,211,153,.55); box-shadow: 0 8px 20px rgba(0,0,0,0.25); }
+    .hint { color: var(--muted); margin-top: .75rem; }
+
+  .hero
+    span.badge 🚀 Quick Start
+    h2(style="margin-top:.5rem") Welcome to the Team Task Board
+    p.subtitle Manage your team’s work with a clear board, smart due-date badges, and simple filters. Sign in, create tasks, drag through stages, and keep everyone on track.
+
+    a.cta(href="/board") Open the Board →
+
+ section.card
+  h2 Get Around
+  p.subtitle Choose where you want to start. You can always use the top nav too.
+  .grid
+    .tile
+      span.chip New
+      a(href="/auth")
+        h3 Auth · Sign Up / Login
+        p Create an account or sign in. Your token is saved locally so you can use the board APIs.
+    if user
+      .tile
+        span.chip Live
+        a(href="/board")
+          h3 Task Board
+          p Create tasks, filter by assignee or priority, move statuses, and leave quick comments.
+      .tile
+        span.chip View
+        a(href="/tasks/view")
+          h3 Task Viewer
+          p Load any task by its ID and see full details with comments in a readable JSON view.
+
+  ul.list
+    li: a(href="/auth") 🔐 Go to Auth
+    if user
+      li: a(href="/board") 🗂️ Go to Board
+      li: a(href="/tasks/view") 🔎 Task Viewer
+
+  if !user
+    p.hint Tip: Sign up on the Auth page first, then head to the Board to create and manage tasks.
+  else
+    p.hint You are logged in — head to the Board or Task Viewer.

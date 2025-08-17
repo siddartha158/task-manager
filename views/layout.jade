@@ -1,0 +1,18 @@
+//- views/layout.jade
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    title= title || 'Team Task Board'
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    header.nav
+      h1 Team Task Board
+      nav
+        a(href='/board') Board
+        a(href='/auth') Auth
+        a(href='/tasks/view') Task Details
+    block content
+    footer
+      p.small Built with Express + Jade

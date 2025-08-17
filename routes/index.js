@@ -43,6 +43,9 @@ function computeBadge(task) {
 // Optional: redirect home → /board (protected). If not logged in, /board will bounce to /auth.
 // Example route
  
+router.get('/',(req,res)=>{
+  res.render('auth', { title: 'Sign Up / Login' });
+})
 // Auth (public)
 // Auth (public). If logged in, you can choose to redirect to /board or show logout UI.
 router.get('/auth', (req, res) => {

@@ -200,7 +200,7 @@ block content
         return li;
       }
       async function loadTasks(){
-        if(!JWT) return alert('Log in first (see /auth)');
+        //- if(!JWT) return alert('Log in first (see /auth)');
         const params=new URLSearchParams();
         if(fAssignee.value) params.set('assigneeId', String(fAssignee.value));
         if(fPriority.value) params.set('priority', fPriority.value);

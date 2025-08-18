@@ -5,14 +5,149 @@ html
     meta(charset='utf-8')
     meta(name='viewport', content='width=device-width, initial-scale=1')
     title= title || 'Team Task Board'
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    style.
+      :root{
+        --bg: #f0fdf4;
+        --panel: #ffffff;
+        --border: #d1fae5;
+        --text: #1f2937;
+        --text-muted: #6b7280;
+        --primary: #059669;
+        --primary-hover: #047857;
+        --radius: 8px;
+        --shadow: 0 2px 8px rgba(5, 150, 105, 0.1);
+      }
+      
+      * {
+        box-sizing: border-box;
+      }
+      
+      body {
+        margin: 0;
+        padding: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        line-height: 1.5;
+        min-height: 100vh;
+      }
+      
+      .nav {
+        background: var(--panel);
+        border-bottom: 2px solid var(--border);
+        box-shadow: var(--shadow);
+        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+      
+      .nav-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      
+      .nav h1 {
+        margin: 0;
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      
+      .nav h1::before {
+        content: '';
+        width: 12px;
+        height: 12px;
+        background: var(--primary);
+        border-radius: 50%;
+        display: inline-block;
+      }
+      
+      .nav nav {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      
+      .nav nav a {
+        text-decoration: none;
+        color: var(--text-muted);
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        border-radius: var(--radius);
+        border: 1px solid transparent;
+        transition: all 0.2s ease;
+        font-size: 0.9rem;
+      }
+      
+      .nav nav a:hover {
+        background: #ecfdf5;
+        border-color: var(--border);
+        color: var(--primary);
+      }
+      
+      .nav nav a:active {
+        transform: translateY(1px);
+      }
+      
+      /* Mobile responsive */
+      @media (max-width: 640px) {
+        .nav-content {
+          flex-direction: column;
+          align-items: stretch;
+          text-align: center;
+        }
+        
+        .nav h1 {
+          justify-content: center;
+        }
+        
+        .nav nav {
+          justify-content: center;
+        }
+        
+        .nav nav a {
+          flex: 1;
+          text-align: center;
+        }
+      }
+      
+      /* Main content area */
+      main {
+        min-height: calc(100vh - 100px);
+      }
+      
+      /* Active link styling */
+      .nav nav a.active {
+        background: var(--primary);
+        color: white;
+        border-color: var(--primary);
+      }
+      
+      .nav nav a.active:hover {
+        background: var(--primary-hover);
+        border-color: var(--primary-hover);
+        color: white;
+      }
+
   body
     header.nav
-      h1 Team Task Board
-      nav
-        a(href='/board') Board
-        a(href='/auth') Auth
-        a(href='/tasks/view') Task Details
-    block content
-    footer
-      p.small Built with Express + Jade
+      .nav-content
+        h1 Team Task Board
+        nav
+          a(href='/board') Board
+          a(href='/auth') Auth
+          a(href='/tasks/view') Task Details
+    
+    main
+      block content

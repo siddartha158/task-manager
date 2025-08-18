@@ -1,6 +1,5 @@
 //- views/board.jade
 extends layout
-
 block content
   //- Simple, readable UI theme (design-only changes)
   style.
@@ -114,7 +113,6 @@ block content
       min-height: 100px;
       resize: vertical;
     }
-
     .row{
       display: flex;
       gap: 1rem;
@@ -130,7 +128,6 @@ block content
       color: var(--muted);
       font-size: 0.9rem;
     }
-
     /* Buttons */
     .btn{
       border: 1px solid var(--brand);
@@ -165,7 +162,6 @@ block content
       border-color: var(--brand);
       color: var(--brand);
     }
-
     /* Filter toolbar */
     .toolbar{
       display: flex;
@@ -179,7 +175,6 @@ block content
       width: auto;
       padding: 0.5rem 1rem;
     }
-
     /* Board grid */
     .board{
       display: grid;
@@ -199,7 +194,6 @@ block content
         grid-template-columns: 1fr;
       }
     }
-
     .column{
       background: var(--panel-soft);
       border: 1px solid var(--line);
@@ -225,7 +219,6 @@ block content
       flex-direction: column;
       gap: 0.75rem;
     }
-
     /* Task card */
     .task{
       border: 1px solid var(--line);
@@ -252,7 +245,6 @@ block content
       font-size: 0.85rem;
       margin-top: 0.5rem;
     }
-
     .badge{
       display: inline-block;
       padding: 0.25rem 0.5rem;
@@ -279,7 +271,6 @@ block content
       border: 1px solid #fecaca;
       color: #991b1b;
     }
-
     .actions{
       margin-top: 1rem;
       display: flex;
@@ -302,14 +293,12 @@ block content
       flex: 1 1 200px;
       min-width: 150px;
     }
-
   .wrap
     .header
       .brand
         .dot
         h1 Task Board
       
-
     section.card
       h2 Create Task
       form#taskForm
@@ -330,7 +319,6 @@ block content
         label(for='tDesc') Description
         textarea#tDesc(placeholder='A few details…')
         button.btn(type='submit') Create
-
     section.card
       h2 Filters
       .row
@@ -347,7 +335,6 @@ block content
       .toolbar
         button.btn#applyFilters Apply Filters
         button.btn-ghost#clearFilters(type='button') Clear
-
     section.card
       h2 Board
       p.small Click "Refresh" to reload tasks; use Change Status / Add Comment on each card.
@@ -367,8 +354,7 @@ block content
         .column
           h3 Done
           ul#colDone.taskCol
-
-  //- Client JS (unchanged; design-only request)
+  //- Client JS (corrected for auto-loading on page load/reload)
   script.
     (function(){
       const taskForm = document.getElementById('taskForm');
@@ -377,21 +363,19 @@ block content
       const clearFiltersBtn = document.getElementById('clearFilters');
       const fAssignee = document.getElementById('fAssignee');
       const fPriority = document.getElementById('fPriority');
-
       const cols = {
         'Backlog': document.getElementById('colBacklog'),
         'In Progress': document.getElementById('colInProgress'),
         'Review': document.getElementById('colReview'),
         'Done': document.getElementById('colDone')
       };
-
       let JWT = localStorage.getItem('token') || '';
       function authHeaders(){ return JWT ? { Authorization:'Bearer '+JWT } : {}; }
       function toISOLocal(dt){ if(!dt) return null; const d=new Date(dt); return isNaN(d)?null:d.toISOString(); }
       function el(tag, attrs={}, children=[]){
         const e=document.createElement(tag);
         Object.entries(attrs).forEach(([k,v])=>{ k==='class'? e.className=v : e.setAttribute(k,v); });
-        (Array.isArray(children)?children:[children]).forEach(c=>{ if(c==null) return; typeof c==='string'? e.appendChild(document.createTextNode(c)) : e.appendChild(c); });
+        (Array.isArray(children)?children:[children]).forEach(c=>{ if(c == null) return; typeof c==='string'? e.appendChild(document.createTextNode(c)) : e.appendChild(c); });
         return e;
       }
       function clearBoard(){ Object.values(cols).forEach(ul=>ul.innerHTML=''); }
@@ -401,10 +385,9 @@ block content
       }
       function renderTaskItem(t){
         const li=el('li',{class:'task'});
-        li.appendChild(el('div',{class:'title'}, t.title+' '));
+        li.appendChild(el('div',{class:'title'}, t.title));
         li.appendChild(el('span',{class:'badge '+t.statusBadge.replace(' ','').toLowerCase()}, t.statusBadge));
         li.appendChild(el('div',{class:'meta'}, `P:${t.priority} · Assignee:${t.assigneeId ?? '-'} · Due:${t.dueDate ? new Date(t.dueDate).toLocaleString() : '-'}`));
-
         const sel=el('select');
         ['Backlog','In Progress','Review','Done'].forEach(s=>{
           const opt=el('option',{value:s},s); if(s===t.status) opt.selected=true; sel.appendChild(opt);
@@ -418,7 +401,6 @@ block content
           if(!res.ok) return alert('Failed to move');
           loadTasks();
         };
-
         const cInp=el('input',{type:'text',placeholder:'Add comment…'});
         const cBtn=el('button',{class:'btn-ghost'},'Add Comment');
         cBtn.onclick=async()=>{
@@ -430,7 +412,6 @@ block content
           if(!res.ok) return alert('Failed to comment');
           cInp.value=''; alert('Comment added');
         };
-
         li.appendChild(el('div',{class:'actions'},[sel,moveBtn,cInp,cBtn]));
         return li;
       }
@@ -447,10 +428,9 @@ block content
         Object.entries(buckets).forEach(([status, arr])=>{
           const ul=cols[status];
           if(!arr.length) return emptyState(ul);
-          arr.forEach(t=> (ul.appendChild(renderTaskItem(t))));
+          arr.forEach(t=> ul.appendChild(renderTaskItem(t)));
         });
       }
-
       taskForm.onsubmit=async(e)=>{
         e.preventDefault();
         const payload={
@@ -469,12 +449,9 @@ block content
         e.target.reset();
         loadTasks();
       };
-
       refreshBtn.onclick=loadTasks;
       applyFiltersBtn.onclick=loadTasks;
       clearFiltersBtn.onclick=()=>{ fAssignee.value=''; fPriority.value=''; loadTasks(); };
-
-      if(JWT) loadTasks();
+      // Load tasks immediately on page load/reload (unconditionally, as with refresh button)
+      loadTasks();
     })();
-    loadTasks(); // This will load tasks immediately when page opens
-
